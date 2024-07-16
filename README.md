@@ -2,12 +2,26 @@
 Readme com essas info: Nome do projeto, Dados dos integrantes (nome e login no repositório), Dados do projeto, como links para ferramentas externas (prototipação, requisitos, gestão de projeto, etc)
 
 ## Integrantes
-DevJuniorss - Roberto Alexandre Da Silva Sousa Junior 
+* [DevJuniorss](https://github.com/DevJuniorss) - Roberto Alexandre Da Silva Sousa Junior - 475223 
+* [eduardohbds](https://github.com/eduardohbds) - Eduardo Henrique Brito Da Silva - 537777 
+* [EvynneAv](https://github.com/EvynneAv) - Evynne Ferreira Avelino - 473618
 
-eduardohbds - Eduardo Henrique Brito Da Silva
+## Tecnologias 
+* Back - SpringBoot Java
+* Front - React TS
+* Banco de dados - Firebase
+* Teste - JUnit
 
-EvynneAv - Evynne Ferreira Avelino
+## Programas usados
+* VSCode
+* Figma
+* ClickUp
+* GitHub
+* Google Docs
+
 
 [Documento de Requisitos](https://docs.google.com/document/d/1xn-mgrkj8UAmSxKRuqeWCNm8BjpWQGttY4R-55bdHxQ/edit?usp=sharing)
+
 [Gestão do Projeto](https://sharing.clickup.com/9010141546/l/h/6-901702124850-1/8c88be56d068a48)
+
 [Prototipação das Telas](https://www.figma.com/file/3xAKWTqxaF2nggIXDlaTNx/EvoNutri?type=design&node-id=0%3A1&mode=design&t=56JkNLGcow9QQMun-1) 
