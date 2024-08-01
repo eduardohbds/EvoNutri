@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/Home.vue';
 import FormUser from '@/views/FormUser.vue';
 import FormLogin from '@/views/FormLogin.vue';
+import FormAppointment from '@/views/FormAppointment.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       component: FormLogin,
       name: 'login',
       alias: '/login',
+    },
+    {
+      path: '/NewAppointment',
+      component: FormAppointment,
+      name: 'Appointment',
     },
   ],
 });
