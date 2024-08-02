@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dado_antropometricos",
+  "info": {
+    "singularName": "dado-antropometrico",
+    "pluralName": "dado-antropometricos",
+    "displayName": "DadoAntropometrico"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Peso": {
+      "type": "string",
+      "required": true
+    },
+    "Altura": {
+      "type": "string",
+      "required": true
+    },
+    "Diliocristal": {
+      "type": "string",
+      "required": true
+    },
+    "Dsuprailiaca": {
+      "type": "string",
+      "required": true
+    },
+    "DobraAbdominal": {
+      "type": "string",
+      "required": true
+    },
+    "DCutaneaAxilarMedia": {
+      "type": "string",
+      "required": true
+    },
+    "DobraCutaneaCoxa": {
+      "type": "string",
+      "required": true
+    },
+    "DobraCutaneaPeitoral": {
+      "type": "string"
+    },
+    "DobraCutaneaSubescapular": {
+      "type": "string",
+      "required": false
+    },
+    "DobraCutaneaSupraespinal": {
+      "type": "string"
+    },
+    "DCTricipita": {
+      "type": "string"
+    },
+    "PerimetroCintura": {
+      "type": "string"
+    },
+    "PerimetroQuadril": {
+      "type": "string"
+    }
+  }
+}

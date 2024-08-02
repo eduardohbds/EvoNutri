@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dado_laboratorials",
+  "info": {
+    "singularName": "dado-laboratorial",
+    "pluralName": "dado-laboratorials",
+    "displayName": "DadoLaboratorial"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "CHDL": {
+      "type": "string"
+    },
+    "CLDL": {
+      "type": "string"
+    },
+    "ColesterolTotal": {
+      "type": "string"
+    },
+    "PressaoArtDistolica": {
+      "type": "string"
+    },
+    "PressaoArtSistolica": {
+      "type": "string"
+    },
+    "Trigliceridios": {
+      "type": "string"
+    }
+  }
+}

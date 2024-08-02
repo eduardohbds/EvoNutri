@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "consulta_infos",
+  "info": {
+    "singularName": "consulta-info",
+    "pluralName": "consulta-infos",
+    "displayName": "ConsultaInfo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "InfoDeConsulta": {
+      "type": "text",
+      "required": true
+    },
+    "Historico": {
+      "type": "text",
+      "required": true
+    },
+    "HistoricoAlimentar": {
+      "type": "text",
+      "required": true
+    },
+    "HistoricoGestacional": {
+      "type": "text"
+    },
+    "Observacoes": {
+      "type": "text"
+    }
+  }
+}

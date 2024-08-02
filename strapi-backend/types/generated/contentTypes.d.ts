@@ -362,33 +362,33 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiEntrevistaEntrevista extends Schema.CollectionType {
-  collectionName: 'entrevistas';
+export interface ApiConsultaInfoConsultaInfo extends Schema.CollectionType {
+  collectionName: 'consulta_infos';
   info: {
-    singularName: 'entrevista';
-    pluralName: 'entrevistas';
-    displayName: 'entrevista';
+    singularName: 'consulta-info';
+    pluralName: 'consulta-infos';
+    displayName: 'ConsultaInfo';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    informacoes: Attribute.String;
-    historia_pessoal: Attribute.String;
-    historia_alimentar: Attribute.String;
-    historia_gestacional: Attribute.String;
-    observacoes: Attribute.String;
+    InfoDeConsulta: Attribute.Text & Attribute.Required;
+    Historico: Attribute.Text & Attribute.Required;
+    HistoricoAlimentar: Attribute.Text & Attribute.Required;
+    HistoricoGestacional: Attribute.Text;
+    Observacoes: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::entrevista.entrevista',
+      'api::consulta-info.consulta-info',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::entrevista.entrevista',
+      'api::consulta-info.consulta-info',
       'oneToOne',
       'admin::user'
     > &
@@ -396,42 +396,78 @@ export interface ApiEntrevistaEntrevista extends Schema.CollectionType {
   };
 }
 
-export interface ApiUsuarioUsuario extends Schema.CollectionType {
-  collectionName: 'usuarios';
+export interface ApiDadoAntropometricoDadoAntropometrico
+  extends Schema.CollectionType {
+  collectionName: 'dado_antropometricos';
   info: {
-    singularName: 'usuario';
-    pluralName: 'usuarios';
-    displayName: 'usuario';
-    description: '';
+    singularName: 'dado-antropometrico';
+    pluralName: 'dado-antropometricos';
+    displayName: 'DadoAntropometrico';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    nome: Attribute.String & Attribute.Required;
-    cpf: Attribute.String & Attribute.Required;
-    celular: Attribute.String;
-    email: Attribute.Email & Attribute.Required;
-    crm: Attribute.String;
-    tipo: Attribute.String;
-    zona: Attribute.String;
-    senha: Attribute.Password;
-    entrevista: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToOne',
-      'api::entrevista.entrevista'
-    >;
+    Peso: Attribute.String & Attribute.Required;
+    Altura: Attribute.String & Attribute.Required;
+    Diliocristal: Attribute.String & Attribute.Required;
+    Dsuprailiaca: Attribute.String & Attribute.Required;
+    DobraAbdominal: Attribute.String & Attribute.Required;
+    DCutaneaAxilarMedia: Attribute.String & Attribute.Required;
+    DobraCutaneaCoxa: Attribute.String & Attribute.Required;
+    DobraCutaneaPeitoral: Attribute.String;
+    DobraCutaneaSubescapular: Attribute.String;
+    DobraCutaneaSupraespinal: Attribute.String;
+    DCTricipita: Attribute.String;
+    PerimetroCintura: Attribute.String;
+    PerimetroQuadril: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::usuario.usuario',
+      'api::dado-antropometrico.dado-antropometrico',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::usuario.usuario',
+      'api::dado-antropometrico.dado-antropometrico',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDadoLaboratorialDadoLaboratorial
+  extends Schema.CollectionType {
+  collectionName: 'dado_laboratorials';
+  info: {
+    singularName: 'dado-laboratorial';
+    pluralName: 'dado-laboratorials';
+    displayName: 'DadoLaboratorial';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    CHDL: Attribute.String;
+    CLDL: Attribute.String;
+    ColesterolTotal: Attribute.String;
+    PressaoArtDistolica: Attribute.String;
+    PressaoArtSistolica: Attribute.String;
+    Trigliceridios: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dado-laboratorial.dado-laboratorial',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dado-laboratorial.dado-laboratorial',
       'oneToOne',
       'admin::user'
     > &
@@ -667,6 +703,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -772,7 +855,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -801,6 +883,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    crmn: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -811,53 +894,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -875,16 +911,17 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::entrevista.entrevista': ApiEntrevistaEntrevista;
-      'api::usuario.usuario': ApiUsuarioUsuario;
+      'api::consulta-info.consulta-info': ApiConsultaInfoConsultaInfo;
+      'api::dado-antropometrico.dado-antropometrico': ApiDadoAntropometricoDadoAntropometrico;
+      'api::dado-laboratorial.dado-laboratorial': ApiDadoLaboratorialDadoLaboratorial;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
     }
   }
 }
