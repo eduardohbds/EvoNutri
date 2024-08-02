@@ -67,6 +67,32 @@
     },
     "crmn": {
       "type": "string"
+    },
+    "cpf": {
+      "type": "string",
+      "required": true
+    },
+    "Nome": {
+      "type": "string"
+    },
+    "Celular": {
+      "type": "string"
+    },
+    "dado_antropometricos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dado-antropometrico.dado-antropometrico"
+    },
+    "dado_laboratorials": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dado-laboratorial.dado-laboratorial"
+    },
+    "consulta_info": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::consulta-info.consulta-info",
+      "inversedBy": "users_permissions_users"
     }
   }
 }

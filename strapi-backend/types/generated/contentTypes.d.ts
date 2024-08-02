@@ -368,6 +368,7 @@ export interface ApiConsultaInfoConsultaInfo extends Schema.CollectionType {
     singularName: 'consulta-info';
     pluralName: 'consulta-infos';
     displayName: 'ConsultaInfo';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -378,6 +379,12 @@ export interface ApiConsultaInfoConsultaInfo extends Schema.CollectionType {
     HistoricoAlimentar: Attribute.Text & Attribute.Required;
     HistoricoGestacional: Attribute.Text;
     Observacoes: Attribute.Text;
+    users_permissions_users: Attribute.Relation<
+      'api::consulta-info.consulta-info',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    DataHora: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -884,6 +891,24 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     crmn: Attribute.String;
+    cpf: Attribute.String & Attribute.Required;
+    Nome: Attribute.String;
+    Celular: Attribute.String;
+    dado_antropometricos: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::dado-antropometrico.dado-antropometrico'
+    >;
+    dado_laboratorials: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::dado-laboratorial.dado-laboratorial'
+    >;
+    consulta_info: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::consulta-info.consulta-info'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

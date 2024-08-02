@@ -4,7 +4,8 @@
   "info": {
     "singularName": "consulta-info",
     "pluralName": "consulta-infos",
-    "displayName": "ConsultaInfo"
+    "displayName": "ConsultaInfo",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +29,16 @@
     },
     "Observacoes": {
       "type": "text"
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "consulta_info"
+    },
+    "DataHora": {
+      "type": "datetime",
+      "required": false
     }
   }
 }
