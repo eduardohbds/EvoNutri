@@ -26,11 +26,12 @@ export type dado_laboratorials = {
 };
 
 export type consulta_infos = {
-    InfoDeConsulta: Text;
-    Historico: Text;
-    HistoricoAlimentar: Text;
-    HistoricoGestacional: Text;
-    Observacoes: Text;
+    id:number;
+    InfoDeConsulta: string;
+    Historico: string;
+    HistoricoAlimentar: string;
+    HistoricoGestacional: string;
+    Observacoes: string;
 };
 
 export type User = {
@@ -44,4 +45,5 @@ export type User = {
     blocked:Boolean;
     role: string;
     crmn:string;
+    jwt:string;
 };
