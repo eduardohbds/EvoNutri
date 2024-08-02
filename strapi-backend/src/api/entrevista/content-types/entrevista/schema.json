@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "entrevistas",
+  "info": {
+    "singularName": "entrevista",
+    "pluralName": "entrevistas",
+    "displayName": "entrevista"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "informacoes": {
+      "type": "string"
+    },
+    "historia_pessoal": {
+      "type": "string"
+    },
+    "historia_alimentar": {
+      "type": "string"
+    },
+    "historia_gestacional": {
+      "type": "string"
+    },
+    "observacoes": {
+      "type": "string"
+    }
+  }
+}
