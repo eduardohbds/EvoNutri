@@ -3,6 +3,7 @@ import HomeView from '../views/Home.vue';
 import FormUser from '@/views/FormUser.vue';
 import FormLogin from '@/views/FormLogin.vue';
 import FormAppointment from '@/views/FormAppointment.vue';
+import FormConsulta from '@/views/FormConsulta.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/NewAppointment',
       component: FormAppointment,
       name: 'Appointment',
+    },
+    {
+      path: '/PreConsultaForm',
+      component: FormConsulta,
+      name: 'Consulta',
     },
   ],
 });
