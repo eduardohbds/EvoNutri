@@ -4,3 +4,4 @@ backend/src/main/java/com/evonutri/backend/backend/controllers/CadastroControlle
 backend/src/main/resources/evonutri.json
 strapi-backend/.tool-versions
 strapi-backend/.env.example
+strapi-backend/.env.example
