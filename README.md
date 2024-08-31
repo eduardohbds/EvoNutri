@@ -8,7 +8,7 @@ Readme com essas info: Nome do projeto, Dados dos integrantes (nome e login no r
 
 ## Tecnologias 
 * Back - SpringBoot Java
-* Front - React TS
+* Front - VueJS
 * Banco de dados - Firebase
 * Teste - JUnit
 
@@ -21,6 +21,8 @@ Readme com essas info: Nome do projeto, Dados dos integrantes (nome e login no r
 
 
 [Documento de Requisitos](https://docs.google.com/document/d/1xn-mgrkj8UAmSxKRuqeWCNm8BjpWQGttY4R-55bdHxQ/edit?usp=sharing)
+
+[Documnto de Boas Praticas](https://docs.google.com/document/d/1GT6kWYOF88-zpudZH5aU8DT2VlYzwnvg/edit?usp=sharing&ouid=102812180195369075447&rtpof=true&sd=true)
 
 [Gestão do Projeto](https://sharing.clickup.com/9010141546/l/h/6-901702124850-1/8c88be56d068a48)
 
