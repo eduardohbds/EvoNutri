@@ -65,7 +65,7 @@ public class DietaDAO {
         }
         return dietasList;
     }
-
+// passar o try com o getConnetcion depois para ambos os nutri e client`s
     public Dieta getDietaById(String id) throws SQLException {
         Dieta dieta = null;
         String sql = "SELECT * FROM dieta WHERE id = ?";
