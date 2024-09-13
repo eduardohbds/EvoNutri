@@ -48,24 +48,26 @@ public class DietaDAO {
         List<Dieta> dietasList = new ArrayList<>();
         String sql = "SELECT * FROM dieta";
         try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                Dieta dieta = new Dieta(
-                        rs.getString("descricao"),
-                        new NutriDAO().getNutricionistaById(rs.getString("nutri_id")),
-                        new ClienteDAO().getClienteByCpf(rs.getString("cliente_id")),
-                        rs.getString("data_inicio"),
-                        rs.getString("data_fim"),
-                        rs.getInt("qtd_ref"),
-                        getMealsByDietaId(rs.getString("id"))
-                );
+                Dieta dieta = Dieta.builder()
+                        .descricao(rs.getString("descricao"))
+                        .nutri(new NutriDAO().getNutricionistaById(rs.getString("nutri_id")))
+                        .cliente(new ClienteDAO().getClienteByCpf(rs.getString("cliente_id")))
+                        .dataInicio(rs.getString("data_inicio"))
+                        .dataFim(rs.getString("data_fim"))
+                        .qtdRef(rs.getInt("qtd_ref"))
+                        .refeicoes(getMealsByDietaId(rs.getString("id")))
+                        .build();
+
                 dietasList.add(dieta);
             }
         }
         return dietasList;
     }
-// passar o try com o getConnetcion depois para ambos os nutri e client`s
+
+    // passar o try com o getConnetcion depois para ambos os nutri e client`s
     public Dieta getDietaById(String id) throws SQLException {
         Dieta dieta = null;
         String sql = "SELECT * FROM dieta WHERE id = ?";
@@ -73,15 +75,15 @@ public class DietaDAO {
             stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    dieta = new Dieta(
-                            rs.getString("descricao"),
-                            new NutriDAO().getNutricionistaById(rs.getString("nutri_id")),
-                            new ClienteDAO().getClienteByCpf(rs.getString("cliente_id")),
-                            rs.getString("data_inicio"),
-                            rs.getString("data_fim"),
-                            rs.getInt("qtd_ref"),
-                            getMealsByDietaId(rs.getString("id"))
-                    );
+                    dieta = Dieta.builder()
+                    .descricao(rs.getString("descricao"))
+                    .nutri(new NutriDAO().getNutricionistaById(rs.getString("nutri_id")))
+                    .cliente(new ClienteDAO().getClienteByCpf(rs.getString("cliente_id")))
+                    .dataInicio(rs.getString("data_inicio"))
+                    .dataFim(rs.getString("data_fim"))
+                    .qtdRef(rs.getInt("qtd_ref"))
+                    .refeicoes(getMealsByDietaId(rs.getString("id")))
+                    .build();
                 }
             }
         }
@@ -148,8 +150,7 @@ public class DietaDAO {
                             rs.getInt("calorias"),
                             rs.getInt("proteinas"),
                             rs.getInt("gorduras"),
-                            rs.getInt("minerais")
-                    );
+                            rs.getInt("minerais"));
                     mealsList.add(meal);
                 }
             }

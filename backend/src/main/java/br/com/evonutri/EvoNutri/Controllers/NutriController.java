@@ -2,12 +2,18 @@ package br.com.evonutri.EvoNutri.Controllers;
 
 import br.com.evonutri.EvoNutri.DAO.NutriDAO;
 import br.com.evonutri.EvoNutri.Model.Nutri;
+import jakarta.websocket.server.PathParam;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
-import org.springframework.beans.factory.annotation.*;
 
 
 @Path("/nutricionistas")

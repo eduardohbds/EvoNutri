@@ -1,84 +1,39 @@
 package br.com.evonutri.EvoNutri.Model;
 
-public class Cliente {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
+
+@Entity
+@Table(name = "clientes")
+@Data
+@Builder
+public class Cliente {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private String endereco;
+    @Pattern(regexp = "^\\+?[0-9\\s.-]{7,15}$\n")
     private String phone;
+    @Pattern(regexp = "^(1[01][0-9]|120|[1-9]?[0-9])$")
     private String age;
     private double weight;
+    @Email
+    @NotNull
     private String email;
+    @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$|\\d{11}$")
     private String cpf;
-    
-    public Cliente(String name, String endereco, String phone, String age, double weight, String email, String cpf) {
-        this.name = name;
-        this.endereco = endereco;
-        this.phone = phone;
-        this.age = age;
-        this.weight = weight;
-        this.email = email;
-        this.cpf = cpf;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    @Override
-    public String toString() {
-        return ("Cliente [getName()=" + getName() + ", getEndereco()=" + getEndereco() + ", getPhone()=" + getPhone() + ", getAge()=" + getAge() + ", getWeight()=" + getWeight() + ", getEmail()=" + getEmail()   + ", getCpf()=" + getCpf() + ", getClass()=" + getClass() + "]");
-    }
-
 }

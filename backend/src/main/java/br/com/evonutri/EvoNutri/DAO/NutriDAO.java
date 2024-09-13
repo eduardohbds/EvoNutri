@@ -15,7 +15,7 @@ public class NutriDAO {
     public void addNutricionista(Nutri nutricionista) {
         String sql = "INSERT INTO nutricionistas (id, name, contactNumber, email, cpf, crnOrCrm) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nutricionista.getId());
             stmt.setString(2, nutricionista.getName());
             stmt.setString(3, nutricionista.getContactNumber());
@@ -35,7 +35,7 @@ public class NutriDAO {
     private void addClientes(Nutri nutricionista) {
         String sql = "INSERT INTO nutricionista_clientes (nutricionista_id, cliente_cpf) VALUES (?, ?)";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             for (Cliente cliente : nutricionista.getClientes()) {
                 stmt.setString(1, nutricionista.getId());
                 stmt.setString(2, cliente.getCpf());
@@ -50,7 +50,7 @@ public class NutriDAO {
     private void addHorarios(Nutri nutricionista) {
         String sql = "INSERT INTO nutricionista_horarios (nutricionista_id, horario) VALUES (?, ?)";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             for (String horario : nutricionista.getHorariosDisponiveis()) {
                 stmt.setString(1, nutricionista.getId());
                 stmt.setString(2, horario);
@@ -66,19 +66,21 @@ public class NutriDAO {
         String sql = "SELECT * FROM nutricionistas";
         List<Nutri> nutricionistas = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                Nutri nutricionista = new Nutri(
-                        rs.getString("name"),
-                        rs.getString("contactNumber"),
-                        rs.getString("email"),
-                        rs.getString("cpf"),
-                        rs.getString("crnOrCrm")
-                );
-                nutricionista.setCpf(rs.getString("id"));
+                Nutri nutricionista = Nutri.builder()
+                        .name(rs.getString("name"))
+                        .contactNumber(rs.getString("contactNumber"))
+                        .email(rs.getString("email"))
+                        .cpf(rs.getString("cpf"))
+                        .crnOrCrm(rs.getString("crnOrCrm"))
+                        .build();
+
+                nutricionista.setId(rs.getString("id")); // Set ID separately if needed
                 nutricionista.setClientes(getClientes(nutricionista.getId()));
                 nutricionista.setHorariosDisponiveis(getHorarios(nutricionista.getId()));
+
                 nutricionistas.add(nutricionista);
             }
         } catch (SQLException e) {
@@ -90,17 +92,23 @@ public class NutriDAO {
     public Nutri getNutricionistaById(String id) {
         String sql = "SELECT * FROM nutricionistas WHERE id = ?";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Nutri nutricionista = new Nutri(
-                            rs.getString("name"),
-                            rs.getString("contactNumber"),
-                            rs.getString("email"),
-                            rs.getString("cpf"),
-                            rs.getString("crnOrCrm")
-                    );
+                    // Nutri nutricionista = new Nutri(
+                    //         rs.getString("name"),
+                    //         rs.getString("contactNumber"),
+                    //         rs.getString("email"),
+                    //         rs.getString("cpf"),
+                    //         rs.getString("crnOrCrm"));
+                    Nutri nutricionista = Nutri.builder()
+                    .name(rs.getString("name"))
+                    .contactNumber(rs.getString("contactNumber"))
+                    .email(rs.getString("email"))
+                    .cpf(rs.getString("cpf"))
+                    .crnOrCrm(rs.getString("crnOrCrm")).build();
+
                     nutricionista.setCpf(rs.getString("id"));
                     nutricionista.setClientes(getClientes(nutricionista.getId()));
                     nutricionista.setHorariosDisponiveis(getHorarios(nutricionista.getId()));
@@ -113,23 +121,31 @@ public class NutriDAO {
         return null;
     }
 
-    private List<Cliente> getClientes(String nutricionistaId) {
+    private List<Cliente> getClientes(String string) {
         String sql = "SELECT * FROM clientes WHERE cpf IN (SELECT cliente_cpf FROM nutricionista_clientes WHERE nutricionista_id = ?)";
         List<Cliente> clientes = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, nutricionistaId);
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, string);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    Cliente cliente = new Cliente(
-                            rs.getString("name"),
-                            rs.getString("endereco"),
-                            rs.getString("phone"),
-                            rs.getString("age"),
-                            rs.getDouble("weight"),
-                            rs.getString("email"),
-                            rs.getString("cpf")
-                    );
+                    // Cliente cliente = new Cliente(
+                    //         rs.getString("name")
+                    //         rs.getString("endereco")
+                    //         rs.getString("phone")
+                    //         rs.getString("age")
+                    //         rs.getDouble("weight")
+                    //         rs.getString("email")
+                    //         rs.getString("cpf"))
+                    Cliente cliente = Cliente.builder()
+                    .name(rs.getString("name"))
+                    .endereco(rs.getString("endereco"))
+                    .phone(rs.getString("phone"))
+                    .age(rs.getString("age"))
+                    .weight(rs.getDouble("weight"))
+                    .email(rs.getString("email"))
+                    .cpf(rs.getString("cpf")).build();
+
                     clientes.add(cliente);
                 }
             }
@@ -139,12 +155,12 @@ public class NutriDAO {
         return clientes;
     }
 
-    private List<String> getHorarios(String nutricionistaId) {
+    private List<String> getHorarios(String string) {
         String sql = "SELECT horario FROM nutricionista_horarios WHERE nutricionista_id = ?";
         List<String> horarios = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, nutricionistaId);
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, string);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     horarios.add(rs.getString("horario"));
@@ -159,7 +175,7 @@ public class NutriDAO {
     public void updateNutricionista(Nutri nutricionista) {
         String sql = "UPDATE nutricionistas SET name = ?, contactNumber = ?, email = ?, cpf = ?, crnOrCrm = ? WHERE id = ?";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nutricionista.getName());
             stmt.setString(2, nutricionista.getContactNumber());
             stmt.setString(3, nutricionista.getEmail());
@@ -182,7 +198,7 @@ public class NutriDAO {
     private void deleteClientes(String nutricionistaId) {
         String sql = "DELETE FROM nutricionista_clientes WHERE nutricionista_id = ?";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nutricionistaId);
             stmt.execute();
         } catch (SQLException e) {
@@ -193,7 +209,7 @@ public class NutriDAO {
     private void deleteHorarios(String nutricionistaId) {
         String sql = "DELETE FROM nutricionista_horarios WHERE nutricionista_id = ?";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nutricionistaId);
             stmt.execute();
         } catch (SQLException e) {
@@ -207,7 +223,7 @@ public class NutriDAO {
 
         String sql = "DELETE FROM nutricionistas WHERE id = ?";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.execute();
         } catch (SQLException e) {

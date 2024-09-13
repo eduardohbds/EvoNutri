@@ -21,16 +21,15 @@ import java.util.List;
 public class DietaController {
 
     private final DietaDAO dietaDAO;
-    private final NutriDAO nutriDAO;
-    private final ClienteDAO clienteDAO;
+    private ClienteDAO clienteDAO;
+    private NutriDAO nutriDAO;
 
-    @Autowired
     public DietaController(DataSource dataSource) {
         try {
             Connection connection = dataSource.getConnection();
             this.dietaDAO = new DietaDAO(connection);
-            this.nutriDAO = new NutriDAO(connection);
-            this.clienteDAO = new ClienteDAO(connection);
+            this.nutriDAO = new NutriDAO();
+            this.clienteDAO = new ClienteDAO();
         } catch (SQLException e) {
             throw new RuntimeException("Failed to connect to the database", e);
         }
