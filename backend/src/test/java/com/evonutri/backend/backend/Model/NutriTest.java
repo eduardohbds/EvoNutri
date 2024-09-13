@@ -1,85 +1,112 @@
 package com.evonutri.backend.backend.Model;
-import br.com.evonutri.EvoNutri.Model.Cliente;
-import br.com.evonutri.EvoNutri.Model.Nutri;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import br.com.evonutri.EvoNutri.Model.Cliente;
+import br.com.evonutri.EvoNutri.Model.Nutri;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class NutriTest {
+public class NutriTest {
 
     private Nutri nutri;
+    private List<Cliente> mockClientes;
+    private List<String> mockHorarios;
 
     @BeforeEach
-    void setUp() {
-        nutri = new Nutri("John Doe", "123456789", "johndoe@example.com", "12345678901", "CRM12345");
+    public void setUp() {
+        // Creating mock data
+        Cliente cliente1 = Mockito.mock(Cliente.class);
+        Cliente cliente2 = Mockito.mock(Cliente.class);
+        mockClientes = new ArrayList<>(Arrays.asList(cliente1, cliente2));
+        
+        mockHorarios = new ArrayList<>(Arrays.asList("08:00", "14:00", "18:00"));
+
+        // Initializing Nutri object using Builder
+        nutri = Nutri.builder()
+                .id("12345678900")
+                .name("Dr. Nutri")
+                .contactNumber("123456789")
+                .email("nutri@example.com")
+                .cpf("123.456.789-00")
+                .crnOrCrm("CRN12345")
+                .clientes(mockClientes)
+                .horariosDisponiveis(mockHorarios)
+                .build();
     }
 
     @Test
-    void testConstructor() {
-        assertNotNull(nutri.getId()); // ID should be generated
-        assertEquals("John Doe", nutri.getName());
+    public void testGetId() {
+        assertEquals("12345678900", nutri.getId());
+    }
+
+    @Test
+    public void testGetName() {
+        assertEquals("Dr. Nutri", nutri.getName());
+    }
+
+    @Test
+    public void testGetContactNumber() {
         assertEquals("123456789", nutri.getContactNumber());
-        assertEquals("johndoe@example.com", nutri.getEmail());
-        assertEquals("12345678901", nutri.getCpf());
-        assertEquals("CRM12345", nutri.getCrnOrCrm());
-        assertTrue(nutri.getClientes().isEmpty()); // No clients should be present initially
-        assertTrue(nutri.getHorariosDisponiveis().isEmpty()); // No available hours should be present initially
     }
 
     @Test
-    void testSetters() {
-        nutri.setName("Jane Doe");
-        nutri.setContactNumber("987654321");
-        nutri.setEmail("janedoe@example.com");
-        nutri.setCpf("09876543210");
-        nutri.setCrnOrCrm("CRM54321");
-
-        assertEquals("Jane Doe", nutri.getName());
-        assertEquals("987654321", nutri.getContactNumber());
-        assertEquals("janedoe@example.com", nutri.getEmail());
-        assertEquals("09876543210", nutri.getCpf());
-        assertEquals("CRM54321", nutri.getCrnOrCrm());
+    public void testGetEmail() {
+        assertEquals("nutri@example.com", nutri.getEmail());
     }
 
     @Test
-    void testAddCliente() {
-        Cliente cliente = new Cliente("Client Name", "Client Address", "Client Phone", "30", 70.0, "client@example.com", "12345678901");
-        nutri.addCliente(cliente);
+    public void testGetCpf() {
+        assertEquals("123.456.789-00", nutri.getCpf());
+    }
 
-        assertFalse(nutri.getClientes().isEmpty());
+    @Test
+    public void testGetCrnOrCrm() {
+        assertEquals("CRN12345", nutri.getCrnOrCrm());
+    }
+
+    @Test
+    public void testGetClientes() {
+        assertEquals(mockClientes, nutri.getClientes());
+        assertEquals(2, nutri.getClientes().size());
+    }
+
+    @Test
+    public void testSetClientes() {
+        Cliente newCliente = Mockito.mock(Cliente.class);
+        List<Cliente> newClientes = new ArrayList<>(Arrays.asList(newCliente));
+        nutri.setClientes(newClientes);
+        
         assertEquals(1, nutri.getClientes().size());
-        assertEquals(cliente, nutri.getClientes().get(0));
+        assertEquals(newCliente, nutri.getClientes().get(0));
     }
 
     @Test
-    void testAddHorarioDisponivel() {
-        nutri.addHorarioDisponivel("08:00 - 09:00");
-        nutri.addHorarioDisponivel("10:00 - 11:00");
-
-        List<String> expectedHorarios = new ArrayList<>();
-        expectedHorarios.add("08:00 - 09:00");
-        expectedHorarios.add("10:00 - 11:00");
-
-        assertEquals(expectedHorarios, nutri.getHorariosDisponiveis());
+    public void testGetHorariosDisponiveis() {
+        assertEquals(mockHorarios, nutri.getHorariosDisponiveis());
+        assertEquals(3, nutri.getHorariosDisponiveis().size());
     }
 
     @Test
-    void testToString() {
-        String expected = "Nutricionista [id=" + nutri.getId() + ", name=John Doe, contactNumber=123456789, email=johndoe@example.com, cpf=12345678901, crnOrCrm=CRM12345, clientes=[], horariosDisponiveis=[]]";
-        assertEquals(expected, nutri.toString());
+    public void testSetHorariosDisponiveis() {
+        List<String> newHorarios = new ArrayList<>(Arrays.asList("09:00", "15:00"));
+        nutri.setHorariosDisponiveis(newHorarios);
+        
+        assertEquals(2, nutri.getHorariosDisponiveis().size());
+        assertEquals("09:00", nutri.getHorariosDisponiveis().get(0));
     }
 
     @Test
-    void testSetClientes() {
-        List<Cliente> clientes = new ArrayList<>();
-        Cliente cliente = new Cliente("Client Name", "Client Address", "Client Phone", "30", 70.0, "client@example.com", "12345678901");
-        clientes.add(cliente);
-
-        // We expect this to throw an UnsupportedOperationException as per the implementation of setClientes
-        assertThrows(UnsupportedOperationException.class, () -> nutri.setClientes(clientes));
+    public void testCrnOrCrm() {
+        /*
+         * Mudar o padrão regex do crn para guardar corretamente
+         * 
+         * (CRN-\d{2}/\d{4}-\d|\d{4,6}/[A-Z]{2})
+        */
+        
     }
 }

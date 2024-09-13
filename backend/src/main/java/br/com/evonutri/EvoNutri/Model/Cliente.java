@@ -26,14 +26,14 @@ public class Cliente {
     private String name;
     @NotNull
     private String endereco;
-    @Pattern(regexp = "^\\+?[0-9\\s.-]{7,15}$\n")
+    @Pattern(regexp = "^\\+?[0-9\\s.-]{7,15}$")
     private String phone;
     @Pattern(regexp = "^(1[01][0-9]|120|[1-9]?[0-9])$")
     private String age;
-    private double weight;
     @Email
     @NotNull
     private String email;
     @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$|\\d{11}$")
     private String cpf;
+    private double weight;
 }
